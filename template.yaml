@@ -21,24 +21,64 @@ servers:
 paths:
   /v1/customers:
     get:
+      parameters:
+        - $ref: "#/components/parameters/pageNumber"
+        - $ref: "#/components/parameters/pageSize"
       responses:
         200:
-          description: List of Customers
+          description: Get all customers
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/customerPagedList"
-  /v1/beers:
+  /v1/customers/{customerId}:
     get:
+      parameters:
+      - name: customerId
+        in: path
+        description: Customer id
+        required: true
+        schema:
+          type: string
+          format: uuid
       responses:
         200:
-          description: List of Beers
+          description: Find customer by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customer"
+  /v1/beers:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/pageNumber"
+        - $ref: "#/components/parameters/pageSize"
+      responses:
+        200:
+          description: Get list of beers
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/beerPagedList"
         404:
           description: Beers not found
+  /v1/beers/{beerId}:
+    get:
+      parameters:
+        - name: beerId
+          in: path
+          description: Beer id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: Find beer by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/beer"
 components:
   schemas:
     customerPagedList:
@@ -186,3 +226,24 @@ components:
           type: boolean
         unpaged:
           type: boolean
+  parameters:
+    pageNumber:
+      name: pageNumber
+      in: query
+      description: Page number
+      required: true
+      schema:
+        type: integer
+        format: int32
+    pageSize:
+      name: pageSize
+      in: query
+      description: Page size
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 20
+
+
+
