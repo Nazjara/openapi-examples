@@ -62,6 +62,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/customer"
+        400:
+          description: Bad request
+        409:
+          description: Conflict
   /v1/customer/{customerId}:
     get:
       summary: Find customer by id
@@ -78,6 +82,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/customer"
+        404:
+          description: Not found
     put:
       summary: Update customer by id
       description: Update **customer** by id
@@ -99,6 +105,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/customer"
+        400:
+          description: Bad request
+        404:
+          description: Not found
+        409:
+          description: Conflict
     delete:
       summary: Delete customer by id
       description: Delete **customer** by id
@@ -110,6 +122,8 @@ paths:
       responses:
         204:
           description: Delete customer by id
+        404:
+          description: Not found
   /v1/beer:
     get:
       summary: Get list of beers
@@ -155,6 +169,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/customer"
+        400:
+          description: Bad request
+        409:
+          description: Conflict
   /v1/beer/{beerId}:
     get:
       summary: Find beer by id
@@ -171,6 +189,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/beer"
+        404:
+          description: Not found
     put:
       summary: Update beer by id
       description: Update **beer** by id
@@ -192,6 +212,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/beer"
+        400:
+          description: Bad request
+        404:
+          description: Not found
+        409:
+          description: Conflict
     delete:
       summary: Delete beer by id
       description: Delete **beer** by id
@@ -203,6 +229,8 @@ paths:
       responses:
         204:
           description: Delete beer by id
+        404:
+          description: Not found
 components:
   schemas:
     customerPagedList:
