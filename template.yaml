@@ -19,8 +19,13 @@ servers:
   - url: https://prod.example.com
     description: Production Server
 paths:
-  /v1/customers:
+  /v1/customer:
     get:
+      summary: Get all customers
+      description: Get all **customers** in the system
+      tags:
+        - Customer
+      operationId: listCustomersV1
       parameters:
         - $ref: "#/components/parameters/pageNumber"
         - $ref: "#/components/parameters/pageSize"
@@ -31,8 +36,13 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/customerPagedList"
-  /v1/customers/{customerId}:
+  /v1/customer/{customerId}:
     get:
+      summary: Find customer by id
+      description: Find **customer** by id
+      tags:
+        - Customer
+      operationId: getCustomerByIdV1
       parameters:
       - name: customerId
         in: path
@@ -48,8 +58,13 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/customer"
-  /v1/beers:
+  /v1/beer:
     get:
+      summary: Get list of beers
+      description: Get list of **beers** in the system
+      tags:
+        - Beer
+      operationId: listBeersV1
       parameters:
         - $ref: "#/components/parameters/pageNumber"
         - $ref: "#/components/parameters/pageSize"
@@ -62,8 +77,13 @@ paths:
                 $ref: "#/components/schemas/beerPagedList"
         404:
           description: Beers not found
-  /v1/beers/{beerId}:
+  /v1/beer/{beerId}:
     get:
+      summary: Find beer by id
+      description: Find **beer** by id
+      tags:
+        - Beer
+      operationId: getBeerByIdV1
       parameters:
         - name: beerId
           in: path
