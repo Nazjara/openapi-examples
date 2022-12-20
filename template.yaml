@@ -36,6 +36,31 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/customerPagedList"
+    post:
+      summary: Create customer
+      description: Create **customer**
+      tags:
+        - Customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customer"
+      responses:
+        201:
+          description: Customer created
+          headers:
+            Location:
+              description: Location of the created customer
+              schema:
+                type: string
+                format: uri
+                example: https://example.com/v1/customer/{assignedId}
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customer"
   /v1/customer/{customerId}:
     get:
       summary: Find customer by id
@@ -77,6 +102,31 @@ paths:
                 $ref: "#/components/schemas/beerPagedList"
         404:
           description: Beers not found
+    post:
+      summary: Create beer
+      description: Create **beer**
+      tags:
+        - Beer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/beer"
+      responses:
+        201:
+          description: Beer created
+          headers:
+            Location:
+              description: Location of the created beer
+              schema:
+                type: string
+                format: uri
+                example: https://example.com/v1/beer/{assignedId}
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customer"
   /v1/beer/{beerId}:
     get:
       summary: Find beer by id
@@ -117,6 +167,11 @@ components:
     customer:
       type: object
       properties:
+        id:
+          type: string
+          readOnly: true
+          description: Customer id
+          format: uuid
         firstName:
           type: string
           description: Customer name
@@ -168,6 +223,11 @@ components:
     beer:
       type: object
       properties:
+        id:
+          type: string
+          readOnly: true
+          description: Beer id
+          format: uuid
         name:
           type: string
         style:
