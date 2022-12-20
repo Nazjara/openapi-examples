@@ -99,6 +99,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/customer"
+    delete:
+      summary: Delete customer by id
+      description: Delete **customer** by id
+      tags:
+        - Customer
+      operationId: deleteCustomerByIdV1
+      parameters:
+        - $ref: "#/components/parameters/customerId"
+      responses:
+        204:
+          description: Delete customer by id
   /v1/beer:
     get:
       summary: Get list of beers
@@ -181,6 +192,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/beer"
+    delete:
+      summary: Delete beer by id
+      description: Delete **beer** by id
+      tags:
+        - Beer
+      operationId: deleteBeerByIdV1
+      parameters:
+        - $ref: "#/components/parameters/beerId"
+      responses:
+        204:
+          description: Delete beer by id
 components:
   schemas:
     customerPagedList:
