@@ -41,6 +41,7 @@ paths:
       description: Create **customer**
       tags:
         - Customer
+      operationId: createCustomerV1
       requestBody:
         required: true
         content:
@@ -69,16 +70,31 @@ paths:
         - Customer
       operationId: getCustomerByIdV1
       parameters:
-      - name: customerId
-        in: path
-        description: Customer id
-        required: true
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/customerId"
       responses:
         200:
           description: Find customer by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customer"
+    put:
+      summary: Update customer by id
+      description: Update **customer** by id
+      tags:
+        - Customer
+      operationId: updateCustomerByIdV1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customer"
+      parameters:
+        - $ref: "#/components/parameters/customerId"
+      responses:
+        200:
+          description: Customer updated
           content:
             application/json:
               schema:
@@ -107,6 +123,7 @@ paths:
       description: Create **beer**
       tags:
         - Beer
+      operationId: createBeerV1
       requestBody:
         required: true
         content:
@@ -135,16 +152,31 @@ paths:
         - Beer
       operationId: getBeerByIdV1
       parameters:
-        - name: beerId
-          in: path
-          description: Beer id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: "#/components/parameters/beerId"
       responses:
         200:
           description: Find beer by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/beer"
+    put:
+      summary: Update beer by id
+      description: Update **beer** by id
+      tags:
+        - Beer
+      operationId: updateBeerByIdV1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/beer"
+      parameters:
+        - $ref: "#/components/parameters/beerId"
+      responses:
+        200:
+          description: Beer updated
           content:
             application/json:
               schema:
@@ -324,6 +356,19 @@ components:
         type: integer
         format: int32
         default: 20
-
-
-
+    customerId:
+      name: customerId
+      in: path
+      description: Customer id
+      required: true
+      schema:
+        type: string
+        format: uuid
+    beerId:
+      name: beerId
+      in: path
+      description: Beer id
+      required: true
+      schema:
+        type: string
+        format: uuid
