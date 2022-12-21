@@ -1,0 +1,670 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: nazjara@gmail.com
+    name: Nazar Lipkovskyy
+    url: https://example.com
+  description: OpenAPI Example
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://example.com/terms
+  title: OpenAPI Example
+  version: 1.0.0
+servers:
+- description: Development Server
+  url: https://dev.example.com
+- description: QA Server
+  url: https://qa.example.com
+- description: Production Server
+  url: https://prod.example.com
+security:
+- basicAuth: []
+- jwtAuth: []
+paths:
+  /v1/customer:
+    get:
+      description: Get all **customers** in the system
+      operationId: listCustomersV1
+      parameters:
+      - description: Page number
+        explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: Page size
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 20
+          format: int32
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customerPagedList'
+          description: Get all customers
+      security: []
+      summary: Get all customers
+      tags:
+      - Customer
+      x-accepts: application/json
+    post:
+      description: Create **customer**
+      operationId: createCustomerV1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/customer'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+          description: Customer created
+          headers:
+            Location:
+              description: Location of the created customer
+              explode: false
+              schema:
+                example: https://example.com/v1/customer/{assignedId}
+                format: uri
+                type: string
+              style: simple
+        "400":
+          description: Bad request
+        "409":
+          description: Conflict
+      summary: Create customer
+      tags:
+      - Customer
+      x-contentType: application/json
+      x-accepts: application/json
+  /v1/customer/{customerId}:
+    delete:
+      description: Delete **customer** by id
+      operationId: deleteCustomerByIdV1
+      parameters:
+      - description: Customer id
+        explode: false
+        in: path
+        name: customerId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Delete customer by id
+        "404":
+          description: Not found
+      summary: Delete customer by id
+      tags:
+      - Customer
+      x-accepts: application/json
+    get:
+      description: Find **customer** by id
+      operationId: getCustomerByIdV1
+      parameters:
+      - description: Customer id
+        explode: false
+        in: path
+        name: customerId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+          description: Find customer by id
+        "404":
+          description: Not found
+      summary: Find customer by id
+      tags:
+      - Customer
+      x-accepts: application/json
+    put:
+      description: Update **customer** by id
+      operationId: updateCustomerByIdV1
+      parameters:
+      - description: Customer id
+        explode: false
+        in: path
+        name: customerId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/customer'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+          description: Customer updated
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "409":
+          description: Conflict
+      summary: Update customer by id
+      tags:
+      - Customer
+      x-contentType: application/json
+      x-accepts: application/json
+  /v1/beer:
+    get:
+      description: Get list of **beers** in the system
+      operationId: listBeersV1
+      parameters:
+      - description: Page number
+        explode: true
+        in: query
+        name: pageNumber
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: Page size
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 20
+          format: int32
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/beerPagedList'
+          description: Get list of beers
+        "404":
+          description: Beers not found
+      security: []
+      summary: Get list of beers
+      tags:
+      - Beer
+      x-accepts: application/json
+    post:
+      description: Create **beer**
+      operationId: createBeerV1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/beer'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+          description: Beer created
+          headers:
+            Location:
+              description: Location of the created beer
+              explode: false
+              schema:
+                example: https://example.com/v1/beer/{assignedId}
+                format: uri
+                type: string
+              style: simple
+        "400":
+          description: Bad request
+        "409":
+          description: Conflict
+      summary: Create beer
+      tags:
+      - Beer
+      x-contentType: application/json
+      x-accepts: application/json
+  /v1/beer/{beerId}:
+    delete:
+      description: Delete **beer** by id
+      operationId: deleteBeerByIdV1
+      parameters:
+      - description: Beer id
+        explode: false
+        in: path
+        name: beerId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Delete beer by id
+        "404":
+          description: Not found
+      summary: Delete beer by id
+      tags:
+      - Beer
+      x-accepts: application/json
+    get:
+      description: Find **beer** by id
+      operationId: getBeerByIdV1
+      parameters:
+      - description: Beer id
+        explode: false
+        in: path
+        name: beerId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/beer'
+          description: Find beer by id
+        "404":
+          description: Not found
+      summary: Find beer by id
+      tags:
+      - Beer
+      x-accepts: application/json
+    put:
+      description: Update **beer** by id
+      operationId: updateBeerByIdV1
+      parameters:
+      - description: Beer id
+        explode: false
+        in: path
+        name: beerId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/beer'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/beer'
+          description: Beer updated
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "409":
+          description: Conflict
+      summary: Update beer by id
+      tags:
+      - Beer
+      x-contentType: application/json
+      x-accepts: application/json
+components:
+  parameters:
+    pageNumber:
+      description: Page number
+      explode: true
+      in: query
+      name: pageNumber
+      required: true
+      schema:
+        format: int32
+        type: integer
+      style: form
+    pageSize:
+      description: Page size
+      explode: true
+      in: query
+      name: pageSize
+      required: false
+      schema:
+        default: 20
+        format: int32
+        type: integer
+      style: form
+    customerId:
+      description: Customer id
+      explode: false
+      in: path
+      name: customerId
+      required: true
+      schema:
+        format: uuid
+        type: string
+      style: simple
+    beerId:
+      description: Beer id
+      explode: false
+      in: path
+      name: beerId
+      required: true
+      schema:
+        format: uuid
+        type: string
+      style: simple
+  schemas:
+    customerPagedList:
+      allOf:
+      - $ref: '#/components/schemas/pagedResponse'
+      example:
+        beers:
+        - firstName: firstName
+          lastName: lastName
+          address:
+            country: Ukraine
+            zipCode: "79000"
+            city: Lviv
+            stateCode: AL
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - firstName: firstName
+          lastName: lastName
+          address:
+            country: Ukraine
+            zipCode: "79000"
+            city: Lviv
+            stateCode: AL
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - firstName: firstName
+          lastName: lastName
+          address:
+            country: Ukraine
+            zipCode: "79000"
+            city: Lviv
+            stateCode: AL
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - firstName: firstName
+          lastName: lastName
+          address:
+            country: Ukraine
+            zipCode: "79000"
+            city: Lviv
+            stateCode: AL
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - firstName: firstName
+          lastName: lastName
+          address:
+            country: Ukraine
+            zipCode: "79000"
+            city: Lviv
+            stateCode: AL
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        beers:
+          items:
+            $ref: '#/components/schemas/customer'
+          maxItems: 100
+          minItems: 1
+          type: array
+      type: object
+    customerList:
+      items:
+        $ref: '#/components/schemas/customer'
+      maxItems: 100
+      minItems: 1
+      type: array
+    customer:
+      example:
+        firstName: firstName
+        lastName: lastName
+        address:
+          country: Ukraine
+          zipCode: "79000"
+          city: Lviv
+          stateCode: AL
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          description: Customer id
+          format: uuid
+          readOnly: true
+          type: string
+        firstName:
+          description: Customer name
+          maxLength: 100
+          minLength: 2
+          type: string
+        lastName:
+          description: Customer surname
+          maxLength: 100
+          minLength: 2
+          type: string
+        address:
+          $ref: '#/components/schemas/address'
+      type: object
+    address:
+      example:
+        country: Ukraine
+        zipCode: "79000"
+        city: Lviv
+        stateCode: AL
+      properties:
+        country:
+          example: Ukraine
+          type: string
+        city:
+          example: Lviv
+          type: string
+        zipCode:
+          example: "79000"
+          type: string
+        stateCode:
+          description: 2 letter state code
+          enum:
+          - AL
+          - AK
+          - AZ
+          - AR
+          - CA
+          maxLength: 2
+          minLength: 2
+          type: string
+      type: object
+    beerPagedList:
+      allOf:
+      - $ref: '#/components/schemas/pagedResponse'
+      example:
+        beers:
+        - price: 0.8008282
+          quantityOnHand: 6.027456183070403
+          name: name
+          brewery:
+            name: name
+            location: location
+          upc: upc
+          style: ALE
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - price: 0.8008282
+          quantityOnHand: 6.027456183070403
+          name: name
+          brewery:
+            name: name
+            location: location
+          upc: upc
+          style: ALE
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - price: 0.8008282
+          quantityOnHand: 6.027456183070403
+          name: name
+          brewery:
+            name: name
+            location: location
+          upc: upc
+          style: ALE
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - price: 0.8008282
+          quantityOnHand: 6.027456183070403
+          name: name
+          brewery:
+            name: name
+            location: location
+          upc: upc
+          style: ALE
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - price: 0.8008282
+          quantityOnHand: 6.027456183070403
+          name: name
+          brewery:
+            name: name
+            location: location
+          upc: upc
+          style: ALE
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        beers:
+          items:
+            $ref: '#/components/schemas/beer'
+          maxItems: 100
+          minItems: 1
+          type: array
+      type: object
+    beerList:
+      items:
+        $ref: '#/components/schemas/beer'
+      maxItems: 100
+      minItems: 1
+      type: array
+    beer:
+      example:
+        price: 0.8008282
+        quantityOnHand: 6.027456183070403
+        name: name
+        brewery:
+          name: name
+          location: location
+        upc: upc
+        style: ALE
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          description: Beer id
+          format: uuid
+          readOnly: true
+          type: string
+        name:
+          type: string
+        style:
+          enum:
+          - ALE
+          - PALE_ALE
+          - IPA
+          - WHEAT
+          - LAGER
+          type: string
+        upc:
+          type: string
+        price:
+          format: float
+          type: number
+        quantityOnHand:
+          format: int32
+          type: number
+        brewery:
+          $ref: '#/components/schemas/brewery'
+      type: object
+    brewery:
+      example:
+        name: name
+        location: location
+      properties:
+        name:
+          type: string
+        location:
+          type: string
+      type: object
+    pagedResponse:
+      properties:
+        pageable:
+          $ref: '#/components/schemas/pagedResponse_pageable'
+        totalPages:
+          format: int32
+          type: integer
+        last:
+          type: boolean
+        totalElements:
+          format: int32
+          type: integer
+        size:
+          format: int32
+          type: integer
+        number:
+          format: int32
+          type: integer
+        numberOfElements:
+          format: int32
+          type: integer
+        sort:
+          $ref: '#/components/schemas/pagedResponse_pageable_sort'
+        first:
+          type: boolean
+      type: object
+    pagedResponse_pageable_sort:
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+      type: object
+    pagedResponse_pageable:
+      properties:
+        sort:
+          $ref: '#/components/schemas/pagedResponse_pageable_sort'
+        offset:
+          format: int32
+          type: integer
+        pageNumber:
+          format: int32
+          type: integer
+        pageSize:
+          format: int32
+          type: integer
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+      type: object
+  securitySchemes:
+    basicAuth:
+      scheme: basic
+      type: http
+    jwtAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+
