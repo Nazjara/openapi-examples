@@ -36,6 +36,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/customerPagedList"
+      security: []
     post:
       summary: Create customer
       description: Create **customer**
@@ -143,6 +144,7 @@ paths:
                 $ref: "#/components/schemas/beerPagedList"
         404:
           description: Beers not found
+      security: []
     post:
       summary: Create beer
       description: Create **beer**
@@ -231,7 +233,18 @@ paths:
           description: Delete beer by id
         404:
           description: Not found
+security:
+  - basicAuth: []
+  - jwtAuth: []
 components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     customerPagedList:
       type: object
